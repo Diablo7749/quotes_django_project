@@ -1,0 +1,30 @@
+{% extends 'quotes/base.html' %}
+{% block content %}
+<h1>Quotes</h1>
+<form method="post" action="{% url 'scrape' %}">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-sm btn-outline-primary mb-3">Scrape Quotes</button>
+</form>
+{% for quote in quotes %}
+    <blockquote class="blockquote border-bottom py-2">
+        <p>{{ quote.text }}</p>
+        <footer class="blockquote-footer">
+            <a href="{% url 'author_detail' quote.author.id %}">{{ quote.author.fullname }}</a>
+        </footer>
+        <small>Tags:
+            {% for tag in quote.tags.all %}
+                <a href="{% url 'tag_quotes' tag.name %}" class="badge bg-secondary">{{ tag.name }}</a>
+            {% endfor %}
+        </small>
+    </blockquote>
+{% endfor %}
+<div class="mt-3">
+    {% if quotes.has_previous %}
+        <a href="?page={{ quotes.previous_page_number }}">Previous</a>
+    {% endif %}
+    <span>Page {{ quotes.number }} of {{ quotes.paginator.num_pages }}</span>
+    {% if quotes.has_next %}
+        <a href="?page={{ quotes.next_page_number }}">Next</a>
+    {% endif %}
+</div>
+{% endblock %}

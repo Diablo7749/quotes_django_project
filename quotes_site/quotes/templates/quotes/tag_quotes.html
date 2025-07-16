@@ -1,0 +1,13 @@
+{% extends 'quotes/base.html' %}
+{% block content %}
+<h2>Quotes tagged with "{{ tag.name }}"</h2>
+{% for quote in quotes %}
+    <blockquote class="blockquote border-bottom py-2">
+        <p>{{ quote.text }}</p>
+        <footer class="blockquote-footer">
+            <a href="{% url 'author_detail' quote.author.id %}">{{ quote.author.fullname }}</a>
+        </footer>
+    </blockquote>
+{% endfor %}
+<a href="/" class="btn btn-link">← Back</a>
+{% endblock %}

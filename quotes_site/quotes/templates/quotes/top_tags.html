@@ -1,0 +1,13 @@
+{% extends 'quotes/base.html' %}
+{% block content %}
+<h2>Top 10 Tags</h2>
+<ul class="list-group">
+    {% for tag in tags %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            <a href="{% url 'tag_quotes' tag.name %}">{{ tag.name }}</a>
+            <span class="badge bg-primary rounded-pill">{{ tag.num }}</span>
+        </li>
+    {% endfor %}
+</ul>
+<a href="/" class="btn btn-link mt-3">← Back</a>
+{% endblock %}
